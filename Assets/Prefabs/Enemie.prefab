@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4665832116584555009}
   - component: {fileID: 1362043047725887067}
   - component: {fileID: 4508983589291764950}
-  - component: {fileID: 8365961369329465956}
+  - component: {fileID: 5384081315879543689}
   m_Layer: 0
   m_Name: Enemie
   m_TagString: Untagged
@@ -111,7 +111,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8365961369329465956
+--- !u!114 &5384081315879543689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3484152556033342507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821342c546784c749568d722a3bb7b5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 04d57892071f4e35a2a7c0e0dc40642d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _speed: 0.5

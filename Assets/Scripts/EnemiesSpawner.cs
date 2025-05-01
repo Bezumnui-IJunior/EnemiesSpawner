@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 
 public class EnemiesSpawner : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyPrefab;
-    [SerializeField] private List<GameObject> _spawnPoints;
+    [SerializeField] private List<SpawnPoint> _spawnPoints;
     [SerializeField] private float _repeatInterval = 2;
 
     private WaitForSeconds _intervalDelay;
@@ -18,23 +17,21 @@ public class EnemiesSpawner : MonoBehaviour
         _intervalDelay = new WaitForSeconds(_repeatInterval);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        if (_spawnPoints.Count == 0)
-            throw new Exception("spawnPoints cannot be empty");
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
 
-        StartSpawn();
-    }
-
-    [ContextMenu("Start spawning")]
-    private void StartSpawn()
-    {
-        StopSpawn();
         _coroutine = StartCoroutine(SpawningTask());
     }
 
-    [ContextMenu("Stop spawning")]
-    private void StopSpawn()
+    private void Start()
+    {
+        if (_spawnPoints.Count == 0)
+            throw new Exception("paths cannot be empty");
+    }
+
+    private void OnDisable()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -44,20 +41,10 @@ public class EnemiesSpawner : MonoBehaviour
     {
         while (enabled)
         {
-            yield return _intervalDelay;
-
-            Enemy enemy = Instantiate(_enemyPrefab);
-            enemy.Init(RandomizeDirection());
-
             int index = Random.Range(0, _spawnPoints.Count);
-            enemy.transform.position = _spawnPoints[index].transform.position;
+            _spawnPoints[index].SpawnPathFollower();
+
+            yield return _intervalDelay;
         }
     }
-
-    private Vector3 RandomizeDirection()
-    {
-        return new Vector3(RandomizePoint(), 0, RandomizePoint());
-    }
-
-    private float RandomizePoint() => Random.Range(-1f, 1f);
 }
